@@ -14,6 +14,7 @@ MONTHS = ["January","February","March","April","May","June", "July","August","Se
 
 today = datetime.date.today()
 screen = Tk()
+daylists = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 screen.title("Calendar App")
 screen.geometry("450x300")
 screen.config(background="ivory2")
@@ -34,8 +35,31 @@ def Show_Calendar():
         col = m%3
         card = Frame(framey, bg= CARD, highlightthickness= 1, highlightbackground = BLUE)
         card.grid(row= row, column= col)
-        Label(framey, text = MONTHS[m], bg= BLUE, fg=TEXT, font=("times", 16, "bold"), width = 21).grid(row=0, columnspan = 7)
-       # monthLabel.grid(row = 0, column= col, columnspan= 7)
+        Label(card, text = MONTHS[m], bg= BLUE, fg=TEXT, font=("times", 16, "bold"), width = 21).grid(row=0, columnspan = 7)
+        #monthLabel.grid(row = 0, column= col, columnspan= 7)
+        for i, dayname in enumerate(daylists):
+            color = ACCENT if i >= 5 else GRAY
+            Label(card, text = dayname, bg= CARD, fg=color, font=("times", 8, "bold"), width = 3).grid(row=1, column = i)
+        weeks = calendar.monthcalendar(year, m + 1)
+        for week_number, week in enumerate(weeks):
+            for day_number, day in enumerate(week):
+                if day == 0:
+                    Label(card, text= "", bg= CARD, width=3).grid(row=week_number+2, column=day_number)
+                else:
+                    isToday = (today == datetime.date(year, m + 1, day))
+                    is_weekend = (day_number >= 5)
+                    if isToday == True:
+                        bg = ACCENT
+                        fg = "white"
+                    elif is_weekend == True:
+                        bg = CARD
+                        fg = ACCENT
+                    else:
+                        bg = CARD
+                        fg = TEXT
+                    lbl = Label(card, text= str(day), bg= bg, fg=fg, font=("times", 8, "bold"), width = 1, height= 1)
+                    lbl.grid(row= week_number+2, column=day_number, padx = 1, pady = 1)
+
     screen2.mainloop()
 
 title = Label(screen, text="Calendar App", bg="ivory3", fg="black", font=("times", 32, "bold"))
