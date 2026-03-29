@@ -43,12 +43,30 @@ EXTRAS = {
     "Fresh Basil":      0.50,
 }
 
+pizza = StringVar(value = "Margerita")
+size_pizza = StringVar(value = "Medium")
+crust = StringVar(value = "Classic")
+
 screen.config(background= BGCol)
 title = Label(screen, text="Super Pizza | Not Authentic Italien food", bg=TITLECol, fg=HEADINGCol, font=("calabri", 25, "bold"))
 chooseyourpizzaframe = Frame(screen, bg= CARDCol, highlightthickness= 1, highlightbackground = PARACol, borderwidth= 15)
-chooseyourpizza = Label(chooseyourpizzaframe, text = "Choose your Pizza!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12))
-
+chooseyourpizza = Label(screen, text = "Choose your Pizza!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12))
 title.pack(padx= 20)
-chooseyourpizza.pack(padx= 20, pady= 30, anchor="w")
-chooseyourpizzaframe.place(x= 20, y= 200, width= 200, height=50)
+chooseyourpizza.pack(padx= 20, pady= 15, anchor="w")
+
+for i, p in enumerate(pizzas):
+    Radiobutton(chooseyourpizzaframe, text= f"{p["name"]} | Cost: ${p['price']}", variable= pizza, value = p["price"], bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").grid(row= i//3, column =i%3, padx = 5, pady = 10)
+
+chooseyourpizzaframe.pack(anchor= "w")
+
+chooseyoursize = Label(screen, text = "Choose your Size!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, pady= 15, anchor="w")
+
+for k, v in SIZES. items():
+    Radiobutton(screen, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, pady = 5, anchor= "w")
+
+chooseyourcrust = Label(screen, text = "Choose your Crust!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, pady= 15, anchor="e")
+
+for k, v in CRUSTS. items():
+    Radiobutton(screen, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, pady = 5, anchor= "e")
+
 screen.mainloop()
