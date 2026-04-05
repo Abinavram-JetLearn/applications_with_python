@@ -70,9 +70,11 @@ chooseyourpizzaframe.pack(anchor= "w")
 
 left_frame = Frame(screen, bg= BGCol)
 left_frame.pack(side="left", fill="both", expand= True, padx= 20, pady= 10)
+left_frame_canvas = Canvas(left_frame, bg= BGCol)
+left_frame_canvas.pack(side="left", fill="both", expand= True, padx= 20, pady= 10)
 left_frame_scrollbar = Scrollbar(left_frame, orient="vertical")
 left_frame_scrollbar.pack(side= "right", fill= Y)
-left_frame_scrollbar.config(command=left_frame.Yview)
+left_frame_canvas.config(yscrollcommand=left_frame_scrollbar.set)
 
 right_frame = Frame(screen, bg= BGCol)
 right_frame.pack(side="right", fill="both", expand= True, padx= 20, pady= 10)
