@@ -42,10 +42,19 @@ EXTRAS = {
     "Sun-dried Tomato": 1.25,
     "Fresh Basil":      0.50,
 }
+EXTRAS_NUM = {
+    "Extra Cheese":     IntVar(),
+    "Jalapenos":        IntVar(),
+    "Mushrooms":        IntVar(),
+    "Olives":           IntVar(),
+    "Sun-dried Tomato": IntVar(),
+    "Fresh Basil":      IntVar(),
+}
 
 pizza = StringVar(value = "Margerita")
 size_pizza = StringVar(value = "Medium")
 crust = StringVar(value = "Classic")
+pizzas_qua = IntVar(value = 1)
 
 screen.config(background= BGCol)
 title = Label(screen, text="Super Pizza | Not Authentic Italien food", bg=TITLECol, fg=HEADINGCol, font=("calabri", 25, "bold"))
@@ -59,14 +68,32 @@ for i, p in enumerate(pizzas):
 
 chooseyourpizzaframe.pack(anchor= "w")
 
-chooseyoursize = Label(screen, text = "Choose your Size!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, pady= 15, anchor="w")
+left_frame = Frame(screen, bg= BGCol)
+left_frame.pack(side="left", fill="both", expand= True, padx= 20, pady= 10)
+left_frame_scrollbar = Scrollbar(left_frame, orient="vertical")
+left_frame_scrollbar.pack(side= "right", fill= Y)
+left_frame_scrollbar.config(command=left_frame.Yview)
+
+right_frame = Frame(screen, bg= BGCol)
+right_frame.pack(side="right", fill="both", expand= True, padx= 20, pady= 10)
+
+chooseyoursize = Label(left_frame, text = "Choose your Size!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, pady= 15, anchor="w")
 
 for k, v in SIZES. items():
-    Radiobutton(screen, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, pady = 5, anchor= "w")
+    Radiobutton(left_frame, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, pady = 5, anchor= "w")
 
-chooseyourcrust = Label(screen, text = "Choose your Crust!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, pady= 15, anchor="e")
+chooseyourcrust = Label(left_frame, text = "Choose your Crust!", bg=TITLECol, fg=HEADINGCol, font=("calabri", 12)).pack(padx= 20, anchor="w")
 
 for k, v in CRUSTS. items():
-    Radiobutton(screen, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, pady = 5, anchor= "e")
+    Radiobutton(left_frame, text = f"{k} | Cost: ${v}", variable= size_pizza, value = v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold"), justify = "left").pack(padx= 10, anchor= "w")
+
+extra_frame = Frame(left_frame, bg= BGCol)
+extra_frame.pack()
+i = 0
+for k, v in EXTRAS_NUM. items():
+    Checkbutton(extra_frame, text=k, variable=v, bg= BGCol, fg=HEADINGCol,  font=("calabri", 12, "bold")).grid(row= i//3, column= i%3, sticky= "w", padx= 5)
+    i += 1
+
+
 
 screen.mainloop()
